@@ -50,8 +50,10 @@ export default function Header() {
             className="flex items-center mx-3 px-4 cursor-pointer space-x-2 relative border border-gray-100 hover:bg-slate-100 
  transition"
           >
-            <UserCircleIcon className="h-6 w-6 text-gray-500" />
-            <p className="hidden lg:inline">Sign Out</p>
+            <div className="relative rounded-full w-6 h-6 border-gray-200 bg-white">
+              <Image src={session.user?.image} fill alt="user image" />
+            </div>
+            <p className="hidden truncate lg:inline">{session.user?.name}</p>
           </div>
         ) : (
           <div
