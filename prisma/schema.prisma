@@ -22,8 +22,6 @@ model books {
   goodreads_url String?  @db.VarChar
   pages         Decimal? @db.Decimal
   recommended   String?
-  userId        String   @unique
-  user          User     @relation(fields: [userId], references: [id])
 }
 
 // NextAuth Google Models
@@ -63,7 +61,6 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  books         books?
 }
 
 model VerificationToken {

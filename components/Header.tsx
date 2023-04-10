@@ -11,8 +11,10 @@ import {
   MagnifyingGlassIcon,
   Bars3BottomLeftIcon,
 } from "@heroicons/react/24/solid";
+import { signIn, signOut, useSession } from "next-auth/react";
 
-function Header() {
+export default function Header() {
+  const { data: session } = useSession();
   return (
     <div className="shadow-sm sticky-top-0 z-50">
       <div className="flex bg-white px-4 py-2 shadow-sm">
@@ -26,13 +28,11 @@ function Header() {
             alt="logo"
           />
         </div>
-
         <div className="flex items-center mx-7 space-x-2 xl:min-w-[300px]">
           <HomeIcon className="h-5 w-5 text-gray-500" />
           <p className="flex-1 ml-2 hidden lg:inline">Home</p>
           <ChevronDownIcon className="h-5 w-5 text-gray-500" />
         </div>
-
         {/* Search Box */}
         <form className="flex items-center flex-1 space-x-2 border border-gray-200 rounded-sm bg-gray-100 px-3 py-1">
           <MagnifyingGlassIcon className="h-6 w-6 text-gray-400" />
@@ -43,15 +43,27 @@ function Header() {
           />
           <button type="submit" className="hidden" />
         </form>
-
-        {/* Sign In/Out Button */}
-        <div className="flex items-center mx-3 px-4 cursor-pointer space-x-2 relative border border-gray-100 hover:bg-slate-100 transition">
-          <UserCircleIcon className="h-6 w-6 text-gray-500" />
-          <p className="hidden lg:inline">My Account</p>
-        </div>
+        {/* Login Button */}
+        {session ? (
+          <div
+            onClick={() => signOut()}
+            className="flex items-center mx-3 px-4 cursor-pointer space-x-2 relative border border-gray-100 hover:bg-slate-100 
+ transition"
+          >
+            <UserCircleIcon className="h-6 w-6 text-gray-500" />
+            <p className="hidden lg:inline">Sign Out</p>
+          </div>
+        ) : (
+          <div
+            onClick={() => signIn()}
+            className="flex items-center mx-3 px-4 cursor-pointer space-x-2 relative border border-gray-100 hover:bg-slate-100 
+      transition"
+          >
+            <UserCircleIcon className="h-6 w-6 text-gray-500" />
+            <p className="hidden lg:inline">Sign In</p>
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-export default Header;
